@@ -4,7 +4,7 @@
 
 // Dependencies
 // =============================================================
-var Chirp = require("../models/chirp.js");
+const db = require('../models')
 
 
 // Routes
@@ -18,7 +18,7 @@ module.exports = function(app) {
     // Sequelize queries are asynchronous, which helps with perceived speed.
     // If we want something to be guaranteed to happen after the query, we'll use
     // the .then function
-    Chirp.findAll({}).then(function(results) {
+    db.Chirp.findAll({}).then(function(results) {
       // results are available to us inside the .then
       res.json(results);
     });
@@ -31,10 +31,9 @@ module.exports = function(app) {
     console.log("Chirp Data:");
     console.log(req.body);
 
-    Chirp.create({
+    db.Chirp.create({
       author: req.body.author,
-      body: req.body.body,
-      created_at: req.body.created_at
+      body: req.body.body
     }).then(function(results) {
       // `results` here would be the newly created chirp
       res.end();
